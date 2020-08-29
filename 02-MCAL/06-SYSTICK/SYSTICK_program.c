@@ -34,10 +34,11 @@ void MSTK_voidSetIntervalPeriodic( u32 Copy_u32Ticks, void (*Copy_ptr)(void) ){
     STK_LOAD = Copy_u32Ticks;
     SET_BIT(STK_CTRL,0);
     SET_BIT( STK_CTRL, 1);
+    stopIntervalFlag = 1;
 }
 
 void MSTK_voidStopInterval(void){
-    stopIntervalFlag = 1;
+    stopIntervalFlag = 0;
 }
 
 u32 MSTK_u32GetRlapsedTime(void){
@@ -57,7 +58,7 @@ void SysTick_Handler(void){
     
     callback();
     if(stopIntervalFlag == 0){
-        SET_BIT(STK_CTRL,0);
+        CLR_BIT(STK_CTRL,1);
     }
 
 }
